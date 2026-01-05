@@ -2,10 +2,10 @@ Feature: Update user
 
   Scenario: Update existing user
     Given url baseUrl
-    And path 'users', 2
-    And request { name: 'Nahuel', job: 'Senior QA Engineer' }
+    And path 'users', 1
+    And request { id: 1, name: 'Nahuel Giudizi', email: 'nahuel@qa.com', username: 'nahuelqa' }
     When method put
     Then status 200
-    And match response.job == 'Senior QA Engineer'
-    And match response.name == 'Nahuel'
-    And match response.updatedAt == '#string'
+    And match response.name == 'Nahuel Giudizi'
+    And match response.email == 'nahuel@qa.com'
+    And match response.id == 1

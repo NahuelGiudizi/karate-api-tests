@@ -8,7 +8,8 @@
 
 **Karate** es un framework open-source que combina automatización de APIs, tests de performance y mocking en una única herramienta. Usa una sintaxis tipo Gherkin (BDD) que es fácil de leer incluso para personas no técnicas.
 
-### 🌟 Ventajas principales:
+### 🌟 Ventajas principales
+
 - ✅ **Sin código Java** para escribir tests
 - ✅ **Validación de JSON/XML** nativa
 - ✅ **Reportes HTML** automáticos
@@ -19,17 +20,18 @@
 
 ## 🎯 API Utilizada
 
-Este proyecto usa **[ReqRes.in](https://reqres.in)** - una API REST pública y gratuita para testing.
+Este proyecto usa **[JSONPlaceholder](https://jsonplaceholder.typicode.com)** - una API REST pública y gratuita para testing y prototyping.
 
-**Base URL:** `https://reqres.in/api`
+**Base URL:** `https://jsonplaceholder.typicode.com`
 
-No requiere autenticación compleja, ideal para demos y entrevistas técnicas.
+No requiere autenticación, ideal para demos y entrevistas técnicas. Proporciona endpoints fake para usuarios, posts, comments, etc.
 
 ---
 
 ## 🚀 Cómo correr los tests
 
 ### Pre-requisitos
+
 - Java 11 o superior
 - Maven 3.8+
 
@@ -92,33 +94,38 @@ karate-api-tests/
 ## 🧪 Cobertura de Tests
 
 ### 1️⃣ **GET Users** (`get-users.feature`)
+
 - ✅ Validación de status code 200
 - ✅ Validación de schema JSON
 - ✅ Verificación de tipos de datos (`#number`, `#string`)
 - ✅ Validación de paginación
 
 ### 2️⃣ **POST Create User** (`create-user.feature`)
+
 - ✅ Creación exitosa de usuario
 - ✅ Validación de response 201
 - ✅ Verificación de campos retornados (name, job, id, createdAt)
 
 ### 3️⃣ **PUT Update User** (`update-user.feature`)
+
 - ✅ Actualización de usuario existente
 - ✅ Validación de status 200
 - ✅ Verificación de datos actualizados
 
 ### 4️⃣ **Login** (`login.feature`)
-- ✅ Login exitoso con credenciales válidas
-- ✅ **Test negativo**: Login sin password → 400
-- ✅ **Test negativo**: Login sin email → 400
-- ✅ Validación de token generado
+
+- ✅ GET single user con validación completa
+- ✅ **Test negativo**: GET usuario inexistente → 404
+- ✅ DELETE usuario → 200
 
 ### 5️⃣ **Chaining** (`chaining.feature`)
+
 - ✅ Crear usuario y capturar ID
 - ✅ Usar el ID para hacer GET del mismo usuario
 - ✅ Demostración de reutilización de datos entre requests
 
 ### 6️⃣ **Data-Driven** (`data-driven.feature`)
+
 - ✅ Scenario Outline con múltiples usuarios
 - ✅ Validación de 4 casos diferentes en un solo scenario
 - ✅ Uso de Examples table
@@ -144,16 +151,22 @@ karate-api-tests/
 ## 🔧 Configuración
 
 ### `karate-config.js`
+
 ```javascript
 function fn() {
+  karate.configure('headers', { 
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    'Accept': 'application/json'
+  });
+  
   var config = {
-    baseUrl: 'https://reqres.in/api'
+    baseUrl: 'https://jsonplaceholder.typicode.com'
   };
   return config;
 }
 ```
 
-Esta configuración permite usar `baseUrl` en todos los features sin hardcodear la URL.
+Esta configuración permite usar `baseUrl` en todos los features sin hardcodear la URL y configura headers apropiados.
 
 ---
 
@@ -173,6 +186,7 @@ Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 ## 🤝 Contribuciones
 
 Las contribuciones son bienvenidas. Por favor:
+
 1. Fork el proyecto
 2. Crea una branch (`git checkout -b feature/mejora`)
 3. Commit tus cambios (`git commit -m 'Agregar mejora'`)

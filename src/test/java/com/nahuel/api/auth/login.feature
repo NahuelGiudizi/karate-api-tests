@@ -1,25 +1,22 @@
-Feature: Login
+Feature: User validation tests
 
-  Scenario: Successful login
+  Scenario: Get single user successfully
     Given url baseUrl
-    And path 'login'
-    And request { email: 'eve.holt@reqres.in', password: 'cityslicka' }
-    When method post
+    And path 'users', 1
+    When method get
     Then status 200
-    And match response.token == '#string'
-    And match response.token == '#notnull'
+    And match response.id == 1
+    And match response.email == '#string'
+    And match response.name == '#string'
 
-  Scenario: Login without password - Negative test
+  Scenario: Get non-existent user - Negative test
     Given url baseUrl
-    And path 'login'
-    And request { email: 'eve.holt@reqres.in' }
-    When method post
-    Then status 400
-    And match response.error == '#string'
+    And path 'users', 9999
+    When method get
+    Then status 404
 
-  Scenario: Login without email - Negative test
+  Scenario: Delete user
     Given url baseUrl
-    And path 'login'
-    And request { password: 'cityslicka' }
-    When method post
-    Then status 400
+    And path 'users', 1
+    When method delete
+    Then status 200
