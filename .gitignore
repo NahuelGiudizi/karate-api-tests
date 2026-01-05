@@ -1,0 +1,6 @@
+# Karate Framework
+target/
+*.iml
+.idea/
+.DS_Store
+*.log
